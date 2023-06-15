@@ -92,6 +92,12 @@ function removeTableRow() {
     }
 }
 
+function resetEntryInput() {
+    document.getElementById('row-description').value = '';
+    document.getElementById('row-rate').value = '';
+    document.getElementById('row-qty').value = '';
+}
+
 document.getElementById('date').innerHTML = (new Date()).toLocaleDateString();
 document.getElementById('due-date').innerHTML = (new Date()).toLocaleDateString();
 setFromStorage();
