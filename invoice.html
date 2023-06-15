@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Invoice</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+		crossorigin="anonymous"></script>
+	<script src="script.js" defer></script>
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<div class="container-l m-3">
+		<div class="row justify-content-between">
+			<div class="col-4">
+				<div class="row">
+					<p class="h6">Personal Information</p>
+				</div>
+				<div class="row">
+					<div class="form-floating">
+						<textarea class="form-control h-auto py-1 ps-1" name="personal-info" id="personal-info"
+							oninput="saveToStorage(this)" cols="30" rows="7" placeholder="Name, address"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="col-5 text-end">
+				<ul class="list-unstyled">
+					<li class="h6 mb-0 fw-semibold">DATE</li>
+					<li id="date" class="mb-1"></li>
+					<li class="h6 mb-0 fw-semibold">DUE DATE</li>
+					<li id="due-date" class="mb-3"></li>
+					<li class="h6 mb-0 fw-semibold">BALANCE DUE</li>
+					<li class="mb-0"><span class="currency">£</span><span class="due"></span></li>
+				</ul>
+			</div>
+			<hr class="mt-2">
+		</div>
+		<div class="row">
+			<div class="col-4">
+				<div class="row">
+					<p>BILL TO</p>
+				</div>
+				<div class="row mb-2">
+					<div class="form-floating">
+						<textarea class="form-control h-auto py-1 ps-1" name="bill-target" id="bill-target"
+							oninput="saveToStorage(this)" cols="30" rows="7"></textarea>
+					</div>
+				</div>
+			</div>
+			<hr>
+		</div>
+		<div class="row justify-content-end">
+			<div class="col-3 p-0 w-auto">
+				<div class="d-print-none">
+					<div class="modal fade" id="addRowModal" tabindex="-1" aria-labelledby="addRowModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="addRowModalLabel">Add row</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class="input-group mb-3">
+										<span class="input-group-text" id="basic-addon1">Description</span>
+										<input id="row-description" type="text" class="form-control"
+											aria-label="Description" aria-describedby="basic-addon1">
+									</div>
+									<div class="input-group mb-3">
+										<span class="input-group-text" id="basic-addon2">RATE</span>
+										<input id="row-rate" type="number" class="form-control" step="0.01" min="0"
+											placeholder="Optional" aria-label="RATE" aria-describedby="basic-addon2">
+
+									</div>
+									<div class="input-group mb-3">
+										<span class="input-group-text" id="basic-addon3">QTY</span>
+										<input id="row-qty" type="number" class="form-control" min="0"
+											placeholder="Optional" aria-label="QTY" aria-describedby="basic-addon3">
+									</div>
+									<div class="form-text">Total will be calculated automatically.
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+										onclick="submitRowModal()">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+						data-bs-target="#addRowModal">+
+					</button>
+				</div>
+			</div>
+			<div class="col-3 ps-1 w-auto">
+				<div class="d-print-none">
+					<button class="btn btn-danger btn-sm" onclick="removeTableRow()">-</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<table id="invoice-table" class="table table-sm ms-3">
+				<thead>
+					<th>DESCRIPTION</th>
+					<th>RATE</th>
+					<th>QTY</th>
+					<th>TOTAL</th>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			<hr>
+		</div>
+		<div class="row justify-content-between">
+			<div class="col-6">
+				<div class="row">
+					<p class="h6">Payment Info</p>
+				</div>
+				<div class="row ps-2">
+					<table class="table table-borderless table-sm align-middle">
+						<thead>
+							<th class="col-3">
+								</td>
+							<th>
+								</td>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Bank name:</td>
+								<td><input id="bank-name" oninput="saveToStorage(this)" type="text"
+										class="form-control"></td>
+							</tr>
+							<tr>
+								<td>Account name:</td>
+								<td><input id="account-name" oninput="saveToStorage(this)" type="text"
+										class="form-control"></td>
+							</tr>
+							<tr>
+								<td>Account number:</td>
+								<td><input id="account-number" oninput="saveToStorage(this)" type="text"
+										class="form-control"></td>
+							</tr>
+							<tr>
+								<td>Sort code:</td>
+								<td><input id="sort-code" oninput="saveToStorage(this)" type="text"
+										class="form-control"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-5 text-end">
+				<div class="row justify-content-between">
+					<div class="col">
+						<p>TOTAL</p>
+					</div>
+					<div class="col">
+						<span class="currency">£</span><span class="due"></span>
+					</div>
+					<hr>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col">
+						<p>BALANCE DUE</p>
+					</div>
+					<div class="col fw-semibold">
+						<span class="currency">£</span><span class="due"></span>
+					</div>
+					<hr>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
