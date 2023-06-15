@@ -15,11 +15,11 @@
 </head>
 
 <body>
-	<div class="container-l m-3">
-		<div class="row justify-content-between">
+	<div class="container-fluid">
+		<div class="row justify-content-between mt-2">
 			<div class="col-4">
 				<div class="row">
-					<p class="h6">Personal Information</p>
+					<p class="h6 mb-2">Personal Information</p>
 				</div>
 				<div class="row">
 					<div class="form-floating">
@@ -29,40 +29,54 @@
 				</div>
 			</div>
 			<div class="col-5 text-end">
-				<ul class="list-unstyled">
-					<li class="h6 mb-0 fw-semibold">DATE</li>
-					<li id="date" class="mb-1"></li>
-					<li class="h6 mb-0 fw-semibold">DUE DATE</li>
-					<li id="due-date" class="mb-3"></li>
-					<li class="h6 mb-0 fw-semibold">BALANCE DUE</li>
-					<li class="mb-0"><span class="currency">£</span><span class="due"></span></li>
-				</ul>
-				<div class="d-print-none">
-					<div class="modal fade" id="currencyModal" tabindex="-1" aria-labelledby="currencyModalLabel"
-						aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h1 class="modal-title fs-5" id="currencyModalLabel">Change currency</h1>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-									<div class="input-group mb-3">
-										<span class="input-group-text" id="basic-addon1">Symbol</span>
-										<input id="currency-symbol-input" type="text" class="form-control"
-											aria-label="Description" aria-describedby="basic-addon1">
+				<div class="row">
+					<p class="h6 mb-0 fw-semibold">DATE</p>
+				</div>
+				<div class="row">
+					<p id="date" class="mb-1"></p>
+				</div>
+				<div class="row">
+					<p class="h6 mb-0 fw-semibold">DUE DATE</p>
+				</div>
+				<div class="row justify-content-end mb-2">
+					<div class="col">
+						<input type="date" id="due-date">
+					</div>
+				</div>
+				<div class="row">
+					<p class="h6 mb-0 fw-semibold">BALANCE DUE</p>
+				</div>
+				<div class="row">
+					<p class="mb-2"><span class="currency">£</span><span class="due"></span></p>
+				</div>
+				<div class="row d-print-none">
+					<div class="col">
+						<div class="modal fade" id="currencyModal" tabindex="-1" aria-labelledby="currencyModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="currencyModalLabel">Change currency</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>
 									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-										onclick="setCurrencySymbol()">Save</button>
+									<div class="modal-body">
+										<div class="input-group mb-3">
+											<span class="input-group-text" id="basic-addon4">Symbol</span>
+											<input id="currency-symbol-input" type="text" class="form-control"
+												aria-label="Description" aria-describedby="basic-addon4">
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+											onclick="setCurrencySymbol()">Save</button>
+									</div>
 								</div>
 							</div>
 						</div>
+						<button type="button" class="btn btn-primary btn-sm w-auto" data-bs-toggle="modal"
+							data-bs-target="#currencyModal">Change currency</button>
 					</div>
-					<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-						data-bs-target="#currencyModal">Change currency</button>
 				</div>
 			</div>
 			<hr class="mt-2">
@@ -70,7 +84,7 @@
 		<div class="row">
 			<div class="col-4">
 				<div class="row">
-					<p>BILL TO</p>
+					<p class="h6 mb-1">BILL TO</p>
 				</div>
 				<div class="row mb-2">
 					<div class="form-floating">
@@ -132,41 +146,41 @@
 			</div>
 		</div>
 		<div class="row">
-			<table id="invoice-table" class="table table-sm ms-3">
-				<thead>
-					<th>DESCRIPTION</th>
-					<th>RATE</th>
-					<th>QTY</th>
-					<th>TOTAL</th>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
+			<div class="col">
+				<table id="invoice-table" class="table table-sm">
+					<tr>
+						<th>DESCRIPTION</th>
+						<th class="text-end">RATE</th>
+						<th class="text-end">QTY</th>
+						<th class="text-end">TOTAL</th>
+					</tr>
+				</table>
+			</div>
 			<hr>
 		</div>
 		<div class="row justify-content-between">
 			<div class="col-6">
 				<div class="row">
-					<p class="h6">Payment Info</p>
+					<p class="h6 ps-3 mb-0">Payment Info</p>
 				</div>
-				<div class="row ps-2">
-					<table class="table table-borderless table-sm align-middle">
-						<thead>
-							<th class="col-3">
-								</td>
-							<th>
-								</td>
-						</thead>
-						<tbody>
+				<div class="row">
+					<div class="col">
+						<table class="table table-borderless table-sm align-middle">
+							<tr>
+								<th class="col-3"></th>
+								<th></th>
+							</tr>
 							<tr>
 								<td>Bank name:</td>
 								<td><input id="bank-name" oninput="saveToStorage(this)" type="text"
-										class="form-control"></td>
+										class="form-control">
+								</td>
 							</tr>
 							<tr>
 								<td>Account name:</td>
 								<td><input id="account-name" oninput="saveToStorage(this)" type="text"
-										class="form-control"></td>
+										class="form-control">
+								</td>
 							</tr>
 							<tr>
 								<td>Account number:</td>
@@ -176,10 +190,11 @@
 							<tr>
 								<td>Sort code:</td>
 								<td><input id="sort-code" oninput="saveToStorage(this)" type="text"
-										class="form-control"></td>
+										class="form-control">
+								</td>
 							</tr>
-						</tbody>
-					</table>
+						</table>
+					</div>
 				</div>
 			</div>
 			<div class="col-5 text-end">

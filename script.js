@@ -28,7 +28,7 @@ function setFromStorage() {
 
 function tableChanged() {
     let total = 0.0;
-    const invoiceTableRows = document.getElementById('invoice-table').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    const invoiceTableRows = document.getElementById('invoice-table').getElementsByTagName('tr');
     for (const row of invoiceTableRows) {
         const cellTotal = parseFloat(row.cells[3].textContent.replace(currency, ''));
         if (cellTotal) {
@@ -64,19 +64,22 @@ function submitRowModal() {
     const rateEle = document.getElementById('row-rate');
     const qtyEle = document.getElementById('row-qty');
     // Table
-    const table = document.getElementById('invoice-table').getElementsByTagName('tbody')[0];
+    const table = document.getElementById('invoice-table');
     const row = table.insertRow();
     row.insertCell(0).textContent = descriptionEle.value;
     const rateCell = row.insertCell(1);
+    rateCell.classList.add('text-end');
     if (rateEle.value) {
         rateCell.appendChild(getNewSpan());
         rateCell.appendChild(document.createTextNode(rateEle.value));
     }
     const qtyCell = row.insertCell(2);
+    qtyCell.classList.add('text-end');
     if (qtyEle.value) {
         qtyCell.appendChild(document.createTextNode(qtyEle.value));
     }
     const totalCell = row.insertCell(3);
+    totalCell.classList.add('text-end');
     if (rateEle.valueAsNumber && qtyEle.valueAsNumber) {
         totalCell.appendChild(getNewSpan());
         totalCell.appendChild(document.createTextNode(rateEle.valueAsNumber * qtyEle.valueAsNumber));
@@ -98,8 +101,8 @@ function resetEntryInput() {
     document.getElementById('row-qty').value = '';
 }
 
-document.getElementById('date').innerHTML = (new Date()).toLocaleDateString();
-document.getElementById('due-date').innerHTML = (new Date()).toLocaleDateString();
+document.getElementById('date').textContent = (new Date()).toLocaleDateString();
+document.getElementById('due-date').valueAsDate = new Date();
 setFromStorage();
 tableChanged();
 updateCurrencyLabels();
