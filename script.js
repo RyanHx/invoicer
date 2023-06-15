@@ -40,11 +40,19 @@ function tableChanged() {
     }
 }
 
-function setCurrencyLabels() {
+function setCurrencySymbol() {
+    const symbolInput = document.getElementById('currency-symbol-input');
+    if (symbolInput.value) {
+        localStorage.setItem('currency', symbolInput.value);
+        updateCurrencyLabels();
+    }
+}
+
+function updateCurrencyLabels() {
     if (localStorage.getItem('currency')) {
         currency = localStorage.getItem('currency');
     }
-
+    document.getElementById('currency-symbol-input').value = currency;
     for (const element of document.querySelectorAll('span.currency')) {
         element.innerText = currency;
     }
@@ -87,4 +95,5 @@ function removeTableRow() {
 document.getElementById('date').innerHTML = (new Date()).toLocaleDateString();
 document.getElementById('due-date').innerHTML = (new Date()).toLocaleDateString();
 setFromStorage();
-tableChanged(); 
+tableChanged();
+updateCurrencyLabels();

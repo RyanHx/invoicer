@@ -37,6 +37,33 @@
 					<li class="h6 mb-0 fw-semibold">BALANCE DUE</li>
 					<li class="mb-0"><span class="currency">£</span><span class="due"></span></li>
 				</ul>
+				<div class="d-print-none">
+					<div class="modal fade" id="currencyModal" tabindex="-1" aria-labelledby="currencyModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="currencyModalLabel">Change currency</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class="input-group mb-3">
+										<span class="input-group-text" id="basic-addon1">Symbol</span>
+										<input id="currency-symbol-input" type="text" class="form-control"
+											aria-label="Description" aria-describedby="basic-addon1">
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+										onclick="setCurrencySymbol()">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+						data-bs-target="#currencyModal">Change currency</button>
+				</div>
 			</div>
 			<hr class="mt-2">
 		</div>
@@ -94,13 +121,13 @@
 						</div>
 					</div>
 					<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-						data-bs-target="#addRowModal">+
+						data-bs-target="#addRowModal">Add bill entry
 					</button>
 				</div>
 			</div>
 			<div class="col-3 ps-1 w-auto">
 				<div class="d-print-none">
-					<button class="btn btn-danger btn-sm" onclick="removeTableRow()">-</button>
+					<button class="btn btn-danger btn-sm" onclick="removeTableRow()">Delete bill entry</button>
 				</div>
 			</div>
 		</div>
