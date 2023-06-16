@@ -101,8 +101,10 @@ function resetEntryInput() {
     document.getElementById('row-qty').value = '';
 }
 
-document.getElementById('date').textContent = (new Date()).toLocaleDateString();
-document.getElementById('due-date').valueAsDate = new Date();
+const date = new Date();
+const dueDateElem =  document.getElementById('due-date');
+dueDateElem.valueAsDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
+document.getElementById('date').textContent = dueDateElem.valueAsDate.toLocaleDateString();
 setFromStorage();
 tableChanged();
 updateCurrencyLabels();
