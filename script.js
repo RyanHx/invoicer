@@ -7,8 +7,17 @@ function getNewSpan() {
     return currencySpan;
 }
 
+function autoSize(element) {
+    element.style.overflow = 'hidden';
+    element.style.height = 0;
+    element.style.height = element.scrollHeight + 'px';
+}
+
 function saveToStorage(element) {
     localStorage.setItem(element.id, element.value);
+    if (element.nodeName === "TEXTAREA") {
+        autoSize(element);
+    }
 }
 
 function setFromStorage() {
@@ -20,8 +29,12 @@ function setFromStorage() {
     document.getElementById('sort-code')];
 
     for (const element of inputs) {
-        if (localStorage.getItem(element.id)) {
-            element.value = localStorage.getItem(element.id);
+        const stored = localStorage.getItem(element.id);
+        if (stored) {
+            element.value = stored;
+            if (element.nodeName === "TEXTAREA") {
+                autoSize(element);
+            }
         }
     }
 }
@@ -102,7 +115,7 @@ function resetEntryInput() {
 }
 
 const date = new Date();
-const dueDateElem =  document.getElementById('due-date');
+const dueDateElem = document.getElementById('due-date');
 dueDateElem.valueAsDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
 document.getElementById('date').textContent = dueDateElem.valueAsDate.toLocaleDateString();
 setFromStorage();

@@ -5,3 +5,7 @@ body {
 input[type="date"] {
     border: 0;
 }
+
+textarea {
+    max-width: 500px;
+}

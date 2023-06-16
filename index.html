@@ -16,19 +16,13 @@
 
 <body>
 	<div class="container-fluid">
-		<div class="row justify-content-between mt-2">
-			<div class="col-4">
-				<div class="row">
-					<p class="h6 mb-2">Personal Information</p>
-				</div>
-				<div class="row">
-					<div class="form-floating">
-						<textarea class="form-control h-auto py-1 ps-1" name="personal-info" id="personal-info"
-							oninput="saveToStorage(this)" cols="30" rows="7" placeholder="Name, address"></textarea>
-					</div>
-				</div>
+		<div class="row mt-2">
+			<div class="col-sm-5">
+				<label class="h6" for="personal-info">Personal Information</label>
+				<textarea class="form-control" name="personal-info" id="personal-info" oninput="saveToStorage(this)"
+					placeholder="Your name, address, contact"></textarea>
 			</div>
-			<div class="col-5 text-end">
+			<div class="col text-end">
 				<div class="row">
 					<p class="h6 mb-0 fw-semibold">DATE</p>
 				</div>
@@ -40,6 +34,7 @@
 				</div>
 				<div class="row justify-content-end mb-2">
 					<div class="col">
+						<label for="due-date" class="visually-hidden">Due date</label>
 						<input type="date" id="due-date">
 					</div>
 				</div>
@@ -82,18 +77,12 @@
 			<hr class="mt-2">
 		</div>
 		<div class="row">
-			<div class="col-4">
-				<div class="row">
-					<p class="h6 mb-1">BILL TO</p>
-				</div>
-				<div class="row mb-2">
-					<div class="form-floating">
-						<textarea class="form-control h-auto py-1 ps-1" name="bill-target" id="bill-target"
-							oninput="saveToStorage(this)" cols="30" rows="7"></textarea>
-					</div>
-				</div>
+			<div class="col-sm-5">
+				<label class="h6" for="bill-target">BILL TO</label>
+				<textarea class="form-control" name="bill-target" id="bill-target" oninput="saveToStorage(this)"
+					placeholder="Company name, address"></textarea>
 			</div>
-			<hr>
+			<hr class="mt-2">
 		</div>
 		<div class="row justify-content-end">
 			<div class="col-3 p-0 w-auto">
@@ -123,6 +112,8 @@
 										<span class="input-group-text" id="basic-addon3">QTY</span>
 										<input id="row-qty" type="number" class="form-control" min="0"
 											placeholder="Optional" aria-label="QTY" aria-describedby="basic-addon3">
+									</div>
+									<div class="form-text">Do not add a currency symbol to the RATE or QTY fields.
 									</div>
 									<div class="form-text">Total will be calculated automatically.
 									</div>
@@ -167,29 +158,34 @@
 					<div class="col">
 						<table class="table table-borderless table-sm align-middle">
 							<tr>
-								<th class="col-3"></th>
-								<th></th>
-							</tr>
-							<tr>
-								<td>Bank name:</td>
-								<td><input id="bank-name" oninput="saveToStorage(this)" type="text"
+								<td class="col-3">Bank name:</td>
+								<td>
+									<label for="bank-name" class="visually-hidden">Bank name</label>
+									<input id="bank-name" oninput="saveToStorage(this)" type="text" title="Bank name"
 										class="form-control">
 								</td>
 							</tr>
 							<tr>
 								<td>Account name:</td>
-								<td><input id="account-name" oninput="saveToStorage(this)" type="text"
+								<td>
+									<label for="account-name" class="visually-hidden">Account name</label>
+									<input id="account-name" oninput="saveToStorage(this)" type="text"
 										class="form-control">
 								</td>
 							</tr>
 							<tr>
-								<td>Account number:</td>
-								<td><input id="account-number" oninput="saveToStorage(this)" type="text"
-										class="form-control"></td>
+								<td class="col-3">Account number:</td>
+								<td>
+									<label for="account-number" class="visually-hidden">Account number</label>
+									<input id="account-number" oninput="saveToStorage(this)" type="text"
+										class="form-control">
+								</td>
 							</tr>
 							<tr>
-								<td>Sort code:</td>
-								<td><input id="sort-code" oninput="saveToStorage(this)" type="text"
+								<td class="col-3">Sort code:</td>
+								<td>
+									<label for="sort-code" class="visually-hidden">Sort code</label>
+									<input id="sort-code" oninput="saveToStorage(this)" type="text"
 										class="form-control">
 								</td>
 							</tr>
