@@ -93,10 +93,8 @@ function submitRowModal() {
     }
     const totalCell = row.insertCell(3);
     totalCell.classList.add('text-end');
-    if (rateEle.valueAsNumber && qtyEle.valueAsNumber) {
-        totalCell.appendChild(getNewSpan());
-        totalCell.appendChild(document.createTextNode(rateEle.valueAsNumber * qtyEle.valueAsNumber));
-    }
+    totalCell.appendChild(getNewSpan());
+    totalCell.appendChild(document.createTextNode((rateEle.valueAsNumber || 0) * (qtyEle.valueAsNumber || 0)));
     tableChanged();
 }
 
