@@ -1,6 +1,7 @@
 let currency = '£';
+let entries = [];
 
-function getNewSpan() {
+function getNewCurrencySpan() {
     const currencySpan = document.createElement('span');
     currencySpan.classList.add('currency');
     currencySpan.textContent = currency;
@@ -27,7 +28,6 @@ function setFromStorage() {
     document.getElementById('account-name'),
     document.getElementById('account-number'),
     document.getElementById('sort-code')];
-
     for (const element of inputs) {
         const stored = localStorage.getItem(element.id);
         if (stored) {
@@ -35,6 +35,13 @@ function setFromStorage() {
             if (element.nodeName === "TEXTAREA") {
                 autoSize(element);
             }
+        }
+    }
+    const storedEntries = localStorage.getItem('entries');
+    if (storedEntries) {
+        entries = JSON.parse(storedEntries);
+        for (const entry of entries) {
+            addTableRow(entry);
         }
     }
 }
@@ -76,26 +83,36 @@ function submitRowModal() {
     const descriptionEle = document.getElementById('row-description');
     const rateEle = document.getElementById('row-rate');
     const qtyEle = document.getElementById('row-qty');
-    // Table
+    const entry = {
+        desc: descriptionEle.value,
+        rate: rateEle.value,
+        qty: qtyEle.value
+    };
+    entries.push(entry);
+    localStorage.setItem('entries', JSON.stringify(entries));
+    addTableRow(entry);
+}
+
+function addTableRow(entry) {
     const table = document.getElementById('invoice-table');
     const row = table.insertRow();
-    row.insertCell(0).textContent = descriptionEle.value;
+    row.insertCell(0).textContent = entry.desc;
     const rateCell = row.insertCell(1);
     rateCell.classList.add('text-end');
-    if (rateEle.value) {
-        rateCell.appendChild(getNewSpan());
-        rateCell.appendChild(document.createTextNode(rateEle.value));
+    if (entry.rate) {
+        rateCell.appendChild(getNewCurrencySpan());
+        rateCell.appendChild(document.createTextNode(entry.rate));
     }
     const qtyCell = row.insertCell(2);
     qtyCell.classList.add('text-end');
-    if (qtyEle.value) {
-        qtyCell.appendChild(document.createTextNode(qtyEle.value));
+    if (entry.qty) {
+        qtyCell.appendChild(document.createTextNode(entry.qty));
     }
     const totalCell = row.insertCell(3);
     totalCell.classList.add('text-end');
-    if (!isNaN(rateEle.valueAsNumber) && !isNaN(qtyEle.valueAsNumber)) {
-        totalCell.appendChild(getNewSpan()); 
-        totalCell.appendChild(document.createTextNode(rateEle.valueAsNumber * qtyEle.valueAsNumber));
+    if (!isNaN(entry.rate) && !isNaN(entry.qty)) {
+        totalCell.appendChild(getNewCurrencySpan());
+        totalCell.appendChild(document.createTextNode(Number(entry.rate) * Number(entry.qty)));
     }
     tableChanged();
 }
@@ -105,6 +122,8 @@ function removeTableRow() {
     if (table.rows.length > 1) {
         document.getElementById('invoice-table').deleteRow(-1);
         tableChanged();
+        entries.pop();
+        localStorage.setItem('entries', JSON.stringify(entries));
     }
 }
 
