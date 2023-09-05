@@ -174,7 +174,7 @@ function addTableRow(entry) {
 }
 
 /**
- * Remove last entry from table and local storage.
+ * Remove last entry from table and cookie storage.
  */
 function removeTableRow() {
     const table = document.getElementById('invoice-table');
@@ -182,7 +182,7 @@ function removeTableRow() {
         document.getElementById('invoice-table').deleteRow(-1);
         tableChanged();
         entries.pop();
-        localStorage.setItem('entries', JSON.stringify(entries));
+        setCookie('entries', JSON.stringify(entries), 30);
     }
 }
 
