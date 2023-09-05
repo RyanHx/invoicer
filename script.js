@@ -1,6 +1,31 @@
 let currency = '£';
 let entries = [];
 
+// https://www.w3schools.com/js/js_cookies.asp
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+// https://www.w3schools.com/js/js_cookies.asp
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
 /**
  * Generates a new span element, used for currency symbol labels.
  * @returns {HTMLSpanElement} Span element with 'currency' class.
@@ -14,7 +39,7 @@ function getNewCurrencySpan() {
 
 /**
  * Resizes height of text area based on content, extending till all text is shown (no scroll).
- * @param {HTMLTextAreaElement} element 
+ * @param {HTMLElement} element 
  */
 function autoSize(element) {
     element.style.overflow = 'hidden';
@@ -23,18 +48,18 @@ function autoSize(element) {
 }
 
 /**
- * Save input value to local storage. Called on input event.
+ * Save input value to cookie storage. Called on input event.
  * @param {HTMLInputElement} element 
  */
 function saveToStorage(element) {
-    localStorage.setItem(element.id, element.value);
+    setCookie(element.id, element.value, 30);
     if (element.nodeName === "TEXTAREA") {
         autoSize(element);
     }
 }
 
 /**
- * Set billing and entry fields from local storage.
+ * Set billing and entry fields from cookie storage.
  */
 function setFromStorage() {
     const inputs = [document.getElementById('personal-info'),
@@ -44,7 +69,7 @@ function setFromStorage() {
     document.getElementById('account-number'),
     document.getElementById('sort-code')];
     for (const element of inputs) {
-        const stored = localStorage.getItem(element.id);
+        const stored = getCookie(element.id);
         if (stored) {
             element.value = stored;
             if (element.nodeName === "TEXTAREA") {
@@ -52,7 +77,7 @@ function setFromStorage() {
             }
         }
     }
-    const storedEntries = localStorage.getItem('entries');
+    const storedEntries = getCookie('entries');
     if (storedEntries) {
         entries = JSON.parse(storedEntries);
         for (const entry of entries) {
@@ -79,12 +104,12 @@ function tableChanged() {
 }
 
 /**
- * Set currency symbol in local storage, call currency label update.
+ * Set currency symbol in cookie storage, call currency label update.
  */
 function setCurrencySymbol() {
     const symbolInput = document.getElementById('currency-symbol-input');
     if (symbolInput.value) {
-        localStorage.setItem('currency', symbolInput.value);
+        setCookie('currency', symbolInput.value, 30);
         updateCurrencyLabels();
     }
 }
@@ -93,8 +118,9 @@ function setCurrencySymbol() {
  * Set currency labels throughout invoice via given input.
  */
 function updateCurrencyLabels() {
-    if (localStorage.getItem('currency')) {
-        currency = localStorage.getItem('currency');
+    const currencyMaybe = getCookie('currency');
+    if (currencyMaybe) {
+        currency = currencyMaybe;
     }
     document.getElementById('currency-symbol-input').value = currency;
     for (const element of document.querySelectorAll('span.currency')) {
@@ -103,7 +129,7 @@ function updateCurrencyLabels() {
 }
 
 /**
- * Pull data from entry modal and push to localStorage + table.
+ * Pull data from entry modal and push to cookie storage + table.
  */
 function submitRowModal() {
     const descriptionEle = document.getElementById('row-description');
@@ -115,7 +141,7 @@ function submitRowModal() {
         qty: qtyEle.value
     };
     entries.push(entry);
-    localStorage.setItem('entries', JSON.stringify(entries));
+    setCookie('entries', JSON.stringify(entries), 30);
     addTableRow(entry);
 }
 
