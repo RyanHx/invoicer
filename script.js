@@ -77,7 +77,7 @@ function setFromStorage() {
             }
         }
     }
-    const storedEntries = getCookie('entries');
+    const storedEntries = localStorage.getItem('entries');
     if (storedEntries) {
         entries = JSON.parse(storedEntries);
         for (const entry of entries) {
@@ -141,7 +141,7 @@ function submitRowModal() {
         qty: qtyEle.value
     };
     entries.push(entry);
-    setCookie('entries', JSON.stringify(entries), 30);
+    localStorage.setItem('entries', JSON.stringify(entries));
     addTableRow(entry);
 }
 
@@ -182,7 +182,7 @@ function removeTableRow() {
         document.getElementById('invoice-table').deleteRow(-1);
         tableChanged();
         entries.pop();
-        setCookie('entries', JSON.stringify(entries), 30);
+        localStorage.setItem('entries', JSON.stringify(entries));
     }
 }
 
