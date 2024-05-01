@@ -1,0 +1,14 @@
+{
+  "name": "Invoicer",
+  "theme_color": "#fff",
+  "background_color": "#fff",
+  "display": "browser",
+  "orientation": "landscape",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "16x16"
+    }
+  ]
+}
