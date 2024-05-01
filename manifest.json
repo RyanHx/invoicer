@@ -4,7 +4,7 @@
   "background_color": "#fff",
   "display": "browser",
   "orientation": "landscape",
-  "start_url": "/",
+  "start_url": "/invoicer/",
   "icons": [
     {
       "src": "favicon.ico",
